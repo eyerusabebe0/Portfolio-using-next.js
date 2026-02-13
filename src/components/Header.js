@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full bg-zinc-950 py-10 shadow-md ">
       <nav className="max-w-6xl mx-auto px-6 py-4">
-        <ul className="flex flex-col sm:flex-row justify-center gap-4 text-sm font-medium text-gray-100">
+        <ul className="flex flex-col sm:flex-row justify-center gap-4 text-sm font-medium text-white">
           {[
             { name: "Home", path: "/" },
             { name: "About", path: "/about" },

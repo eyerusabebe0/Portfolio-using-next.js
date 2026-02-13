@@ -1,47 +1,47 @@
 "use client";
 
+import { ContactForm } from "../action";
 import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Portfolio() {
-  const [show, setShow] = useState(false);
-   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  
 
-  async function handleSubmit(e) {
-  e.preventDefault();
-
-  try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, message }),
-    });
-
-    const result = await res.json();
-
-   
-    if (!res.ok) {
-      alert(result.error || "Failed to send message");
-      return;
-    }
-
+  const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
+  
+    async function handleSubmit(e) {
+      e.preventDefault();
+  
     
-    alert("Message sent successfully 🚀");
-
-   
-    setName("");
-    setEmail("");
-    setMessage("");
-  } catch (error) {
-    alert("Something went wrong. Please try again.");
-    console.error(error);
-  }
-}
-
+      if (!/^[A-Za-z\s]+$/.test(name)) {
+        alert("Name must contain only letters!");
+        return;
+      }
+      if (!email.includes("@")) {
+        alert("Enter a valid email!");
+        return;
+      }
+  
+      setLoading(true);
+      try {
+        const result = await ContactForm({ name, email, message });
+        if (result.success) {
+          alert("✅ Success! Your message was saved to Railway MySQL.");
+          setName("");
+          setEmail("");
+          setMessage("");
+        } else {
+          alert("❌ Something went wrong: " + result.error);
+        }
+      } catch (err) {
+        alert("❌ Error: " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
   return (
     <main className="bg-zinc-950 text-zinc-500 pt-24">
 

@@ -1,65 +1,288 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from 'next/link';
+import { useState } from 'react';
+
+export default function Portfolio() {
+  const [show, setShow] = useState(false);
+   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(e) {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, message }),
+    });
+
+    const result = await res.json();
+
+   
+    if (!res.ok) {
+      alert(result.error || "Failed to send message");
+      return;
+    }
+
+    
+    alert("Message sent successfully 🚀");
+
+   
+    setName("");
+    setEmail("");
+    setMessage("");
+  } catch (error) {
+    alert("Something went wrong. Please try again.");
+    console.error(error);
+  }
+}
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="bg-zinc-950 text-zinc-500 pt-24">
+
+
+      <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-between gap-3 h-auto sm:h-screen bg-[url('https://i.pinimg.com/736x/c8/f7/bd/c8f7bdd3e52c315dafb9641f92672498.jpg')] bg-cover bg-center bg-no-repeat">
+
+       
+        <section className="relative overflow-hidden py-10 px-6 text-center sm:text-left sm:w-2/3 w-full mr-2 ml-10">
+          <div className="relative z-10 max-w-6xl mx-auto animate-fade-in">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-4 text-indigo-400 tracking-tight mt-10 sm:mt-24">
+              <span className="text-zinc-50">Eyerusalem</span>
+              <span className="text-indigo-400"> Abebe</span>
+            </h1>
+            <h2 className="text-xl md:text-3xl text-zinc-400 mb-6 mt-4">
+              Aspiring Full-Stack Web Developer
+            </h2>
+            <p className="text-zinc-500 max-w-2xl mx-auto sm:mx-0 mb-2 mt-2">
+              Computer Science student building modern, responsive web applications with React and Next.js.
+            </p>
+            <p className="text-gray-600 max-w-2xl mx-auto sm:mx-0">
+              Passionate about creating efficient, scalable web solutions while pursuing Computer Science at Bahir Dar University.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-4 mt-6 sm:mt-10 relative z-20 mb-10">
+              <button
+                className="bg-zinc-800 px-6 py-3 text-xl rounded-2xl text-zinc-100 cursor-pointer 
+                           hover:bg-indigo-400 hover:text-zinc-50 hover:scale-105 
+                           transition-all duration-300 transform text-center" onClick={()=>setShow(!show)}>
+                Explore
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="flex justify-center mb-8">
+         <img
+  src="https://i.pinimg.com/736x/19/e4/a2/19e4a2cad8d43690a70eb971740d75b2.jpg"
+  alt="my photo"
+  className="w-70 h-70 mr-10 rounded-full object-cover border-2 border-indigo-400/50 shadow-[0_0_20px_rgba(129,140,248,0.5)] "
+/>
+
+          
+        </section>
+
+      </div>
+
+
+       {show &&(
+
+      <section className={`py-24 px-6 max-w-3xl  mx-auto bg-transparent rounded-xl animate-fade-in
+  transform transition-all duration-500
+`}>
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-zinc-800/50 backdrop-blur rounded-2xl p-10 border border-zinc-700 shadow-md 
+                          transform transition-all duration-300 hover:scale-105">
+            <h3 className="text-3xl font-semibold mb-6 text-zinc-100 text-center">Education</h3>
+            <p className="text-zinc-400 text-center text-lg">B.Sc. in Computer Science</p>
+            <p className="text-zinc-500 text-center mt-2">
+              Bahir Dar University · Expected 2027
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+       
+        
+      </section>
+)}
+
+{show &&(
+      <section className={`text-center py-24 px-6 max-w-10xl mx-auto bg-zinc-900 animate-fade-in`} >
+        <h3 className="text-3xl text-center font-semibold  text-white font-bold underline decoration-indigo-400 decoration-4 underline-offset-8 mb-14 ">About Me</h3>
+
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            <div className="bg-transparent max-w-md mx-auto border border-indigo-400 p-10 rounded-xl shadow text-center hover:translate-y-2 transform transition-all duration-300 ease-out ">
+                   <h2 className="text-xl font-semibold mb-4 text-white"> <span className="mr-1">✨</span> Who I am</h2>
+        <p className="text-zinc-300 leading-relaxed">
+          I am a 3rd-year Computer Science student at Bahir Dar University. 
+          <br />
+
+          I learn best by doing — turning ideas into real projects. 
+         <br />
+          I care deeply about writing clear code, creating intuitive layouts, and continuously improving my skills. 
+        </p>
+</div>
+
+
+<div className="bg-transparent max-w-md mx-auto border border-indigo-400 p-10 rounded-xl shadow-md text-center hover:translate-y-2 transform transition-all duration-300 ease-out">
+  <h2 className="text-xl font-semibold mb-4 text-white"><span className="mr-1">❤️</span> What I Love</h2>
+        <p className="text-zinc-300 leading-relaxed">
+           I love clean layouts, clear design, and simple user experiences that feel natural and easy to use.
+              <br />
+            I enjoy learning new programming languages, exploring modern tools. 
+           <br />
+            I am a hardworking and focused person, but I also value balance. 
+        </p>
         </div>
-      </main>
+
+        <div className="bg-transparent max-w-md mx-auto border border-indigo-400 p-10 rounded-xl shadow-md text-center hover:translate-y-2 transform transition-all duration-300 ease-out">
+          <h2 className="text-xl font-semibold mb-4 text-white"><span className="mr-1">☀️</span> Sunlight side</h2>
+          <p className="text-zinc-300 leading-relaxed">I am naturally curious, disciplined, and optimistic about growth.
+            <br />
+            I enjoy solving problems and learning from mistakes. 
+             <br />
+           I try to bring clarity, patience, and positive energy into everything I do.
+            </p>
+        </div>
+        </div>
+      </section>
+)}
+
+{show &&(
+<section className={`py-10 px-6 text-center w-full `}>
+  <div className="max-w-md mx-auto">
+    <h3 className="text-3xl font-semibold mb-6 text-zinc-100">Skills</h3>
+    
+    <div className="flex flex-col items-center gap-4">
+      {[
+        { name: "HTML & CSS", color: "bg-red-500 text-white" },
+        { name: "JavaScript (ES6+)", color: "bg-yellow-400 text-black" },
+        { name: "React", color: "bg-blue-500 text-white" },
+        { name: "Next.js", color: "bg-black text-white" },
+        { name: "Tailwind CSS", color: "bg-sky-500 text-white" },
+        { name: "Git & GitHub", color: "bg-gray-800 text-white" },
+      ].map((skill, index) => (
+        <div
+          key={index}
+          className={`${skill.color} rounded-md px-4 py-2 w-64 text-center font-medium transform transition-all duration-500 hover:scale-105`}
+        >
+          {skill.name}
+        </div>
+      ))}
     </div>
+  </div>
+</section>
+
+)}
+
+{show&&(
+      <section className={`py-20 px-6 bg-zinc-900 `}>
+        <h3 className="text-3xl font-semibold mb-12 text-center text-indigo-400 underline decoration-indigo-400 decoration-4 underline-offset-8">Projects</h3>
+
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <article className="p-6 rounded-xl shadow-lg bg-zinc-950 hover:shadow-2xl transition hover:scale-[1.02] ">
+          <h4 className="text-2xl font-bold mb-3 text-indigo-400">Bahir Dar University Student Union Selection System</h4>
+          <ul className="list-disc list-inside mb-3 text-zinc-100">
+      <li>Real-time voting features</li>
+      <li>Admin dashboard for election management</li>
+      <li>Result visualization and analytics</li>
+    </ul>
+          <p  className="text-indigo-400"><strong>Tech:  </strong>
+  <span className="px-3 py-1 text-sm rounded-full bg-indigo-400/10 text-indigo-400 mr-3">React </span>
+  <span className="px-3 py-1 text-sm rounded-full bg-zinc-800 text-zinc-300"> CSS</span>
+ </p>
+
+        </article>
+
+
+        <article className="p-6 rounded-xl shadow-lg bg-zinc-950 hover:shadow-2xl transition hover:scale-[1.02] ">
+          <h4 className="text-2xl font-bold mb-3 text-indigo-400">Church Website</h4>
+          <ul className="list-disc list-inside mb-3 text-zinc-100">
+      <li>Content management system</li>
+      <li>Event scheduling</li>
+      <li>Member communication features</li>
+    </ul>
+    <p className="text-indigo-400"><strong>Tech:</strong>  <span className="px-3 py-1 text-sm rounded-full bg-indigo-400/10 text-indigo-400 mr-3">React </span>
+  <span className="px-3 py-1 text-sm rounded-full bg-zinc-800 text-zinc-300"> CSS</span></p>
+
+        </article>
+           </div>
+      </section>
+)}
+
+{show && (
+      <section className="min-h-screen grid grid-cols-1 md:grid-cols-2 gap-3 place-items-center py-20 px-6 bg-zinc-900 text-center">
+
+  
+      <div className="max-w-2xl mx-auto bg-transparent py-12 px-8 shadow-lg">
+        <h3 className="text-3xl font-semibold mb-4 text-indigo-400 underline decoration-indigo-400 decoration-4 underline-offset-8">
+          Contact
+        </h3>
+
+        <p className="text-zinc-400 mb-8">
+          Feel free to reach out for collaboration, opportunities, or just to say hello.
+        </p>
+
+        <p className="mb-4 text-zinc-300 text-lg">
+          Email:
+          <a href="mailto:jeryabebe1321@gmail.com" className="ml-2 text-indigo-400 hover:underline">
+            jeryabebe1321@gmail.com
+          </a>
+        </p>
+
+        <p className="text-zinc-300 text-lg">
+          GitHub:
+          <a href="https://github.com/eyerusabebe0" target="_blank" rel="noopener noreferrer" className="ml-2 text-indigo-400 hover:underline">
+            eyerusabebe0
+          </a>
+        </p>
+      </div>
+
+
+      <div className="max-w-2xl mx-auto bg-transparent py-12 px-8 shadow-lg border border-zinc-700/60 rounded-2xl backdrop-blur-sm">
+        <p className="text-2xl font-semibold mb-10 text-indigo-400">Drop a message</p>
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <input
+            placeholder="Your name"
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="rounded-xl text-zinc-450 py-2 border border-indigo-400 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-transparent focus:border-indigo-400 text-sm md:text-base mb-5"
+          />
+
+          <input
+            placeholder="Your email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="rounded-xl border border-indigo-400 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 mb-5 focus:bg-transparent text-zinc-450 text-sm md:text-base mb-5"
+          />
+
+          <textarea
+            placeholder="Your message"
+            required
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="rounded-xl w-full h-28 border px-2 border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 mb-5 focus:bg-transparent text-zinc-450 text-sm md:text-base mb-5 md:col-span-2"
+          />
+
+          <button
+            type="submit"
+            className="block border border-indigo-400 px-2 py-2 cursor-pointer bg-gradient-to-r from-zinc-900 via-indigo-400 to-zinc-900 rounded-2xl text-zinc-950 w-full font-extrabold hover:bg-gradient-to-r hover:from-indigo-400 hover:via-zinc-900 hover:to-indigo-400 hover:text-white hover:scale-105 md:col-span-2"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    </section>
+)}
+    </main>
   );
 }
